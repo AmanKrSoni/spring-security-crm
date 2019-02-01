@@ -52,6 +52,7 @@ public class DispatcherServletConfig {
             securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
         }catch (Exception e){throw new RuntimeException(e);}
 
+
         //LOG THE CONNECTION props
         logger.info(">>> jdbc.url "+env.getProperty("jdbc.url"));
         logger.info(">>> jdbc.user "+env.getProperty("jdbc.user"));

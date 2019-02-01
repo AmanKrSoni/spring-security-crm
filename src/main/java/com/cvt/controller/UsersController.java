@@ -3,6 +3,7 @@ package com.cvt.controller;
 import com.cvt.model.Users;
 import com.cvt.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,10 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
+
+    Logger logger=Logger.getLogger(getClass().getName());
 
     @Autowired
     UsersService usersService;
@@ -24,17 +28,24 @@ public class UsersController {
     public String showUsersList(Model model){
 
         //get users from service
-        List<Users> usersList=usersService.getAllUsers();
+        /*List<Users> usersList=usersService.getAllUsers();*/
+
+
+
+        //Restricted from service layer as normal user cann`t get their info
+        List<Users> list=usersService.getAllUsers();
+
+        logger.info(">>>  "+list + " <<<<<");
 
         //add users to model
-        model.addAttribute("users",usersList);
+        model.addAttribute("users",list);
         return "users-list";
     }
 
     @GetMapping("/showFormForAdd")
-    @PreAuthorize("hasAnyRole('ADMIN') or #username==authentication.principal.username ")
-    public String showFormForAdd(Model model,String username){
-        username=getUserLogInInfo();
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String showFormForAdd(Model model){
+
         model.addAttribute("users",new Users());
         return "users-add";
     }
@@ -79,4 +90,7 @@ public class UsersController {
         String user=securityContext.getAuthentication().getName();
         return user;
     }
+
+
+
 }

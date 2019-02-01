@@ -29,8 +29,8 @@ public class CustomerController {
     }
 
     @GetMapping("/showFormForAdd")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public String showFormForAdd(Model model){
+    @PreAuthorize("hasPermission(#customer ,'READ_ONLY') or hasAnyRole('ADMIN') ")
+    public String showFormForAdd(Model model,Customer customer){
         model.addAttribute("customer",new Customer());
         return "customer-add";
     }
@@ -61,4 +61,8 @@ public class CustomerController {
         customerService.deleteCustomer(id);
         return "redirect:/customers/list";
     }
+
+
+
+
 }
