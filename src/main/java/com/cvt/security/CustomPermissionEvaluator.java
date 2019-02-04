@@ -1,13 +1,12 @@
 package com.cvt.security;
 
-import com.cvt.model.Users;
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.io.Serializable;
@@ -16,6 +15,7 @@ import java.util.logging.Logger;
 
 
 public class CustomPermissionEvaluator implements PermissionEvaluator{
+
     Logger logger= Logger.getLogger(getClass().getName());
 
 

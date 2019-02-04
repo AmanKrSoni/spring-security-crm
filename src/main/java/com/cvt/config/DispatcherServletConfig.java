@@ -3,15 +3,11 @@ package com.cvt.config;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -25,6 +21,7 @@ import java.util.logging.Logger;
 @ComponentScan(basePackages = "com.cvt")
 @PropertySource("classpath:jdbc-mysql.properties")
 @EnableTransactionManagement
+@EnableAspectJAutoProxy
 public class DispatcherServletConfig {
 
     //setup variable to hold the properties
@@ -62,7 +59,7 @@ public class DispatcherServletConfig {
         securityDataSource.setUser(env.getProperty("jdbc.user"));
         securityDataSource.setPassword(env.getProperty("jdbc.password"));
 
-        // setup the connectionpool props
+        // setup the connection pool props
         securityDataSource.setInitialPoolSize(getIntProperties("connection.pool.initialPoolSize"));
         securityDataSource.setMinPoolSize(getIntProperties("connection.pool.minPoolSize"));
         securityDataSource.setMaxPoolSize(getIntProperties("connection.pool.maxPoolSize"));

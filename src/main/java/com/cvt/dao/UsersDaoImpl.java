@@ -1,6 +1,5 @@
 package com.cvt.dao;
 
-import com.cvt.model.Customer;
 import com.cvt.model.Users;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
